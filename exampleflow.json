@@ -1,0 +1,973 @@
+[
+    {
+        "id": "d226aab4.b89a58",
+        "type": "subflow",
+        "name": "Get device descriptionfile",
+        "info": "",
+        "category": "",
+        "in": [
+            {
+                "x": 80,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "b4718972.ab4558"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 540,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "dafd2ccf.d014f",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 340,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "9f6ed94.205fe28",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "color": "#DDAA99"
+    },
+    {
+        "id": "b4718972.ab4558",
+        "type": "rbe",
+        "z": "d226aab4.b89a58",
+        "name": "",
+        "func": "rbe",
+        "gap": "",
+        "start": "",
+        "inout": "out",
+        "property": "payload",
+        "x": 200,
+        "y": 80,
+        "wires": [
+            [
+                "8eb99a.8ad0d668"
+            ]
+        ]
+    },
+    {
+        "id": "f26e0908.5d6438",
+        "type": "http request",
+        "z": "d226aab4.b89a58",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "persist": false,
+        "authType": "",
+        "x": 210,
+        "y": 160,
+        "wires": [
+            [
+                "9f6ed94.205fe28"
+            ]
+        ]
+    },
+    {
+        "id": "8eb99a.8ad0d668",
+        "type": "change",
+        "z": "d226aab4.b89a58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "url",
+                "pt": "msg",
+                "to": "payload.headers.LOCATION",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "headers",
+                "pt": "msg",
+                "to": "{\"USER-AGENT\": \"UDAP/2.0\"}",
+                "tot": "json"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 200,
+        "y": 120,
+        "wires": [
+            [
+                "f26e0908.5d6438"
+            ]
+        ]
+    },
+    {
+        "id": "9f6ed94.205fe28",
+        "type": "xml",
+        "z": "d226aab4.b89a58",
+        "name": "",
+        "property": "payload",
+        "attr": "",
+        "chr": "",
+        "x": 210,
+        "y": 200,
+        "wires": [
+            [
+                "dafd2ccf.d014f"
+            ]
+        ]
+    },
+    {
+        "id": "dafd2ccf.d014f",
+        "type": "change",
+        "z": "d226aab4.b89a58",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.envelope.device.0",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 400,
+        "y": 200,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a37ea1d7.c0456",
+        "type": "tab",
+        "label": "LG UDAP Remote",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "4a9f62ba.276d9c",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 120,
+        "wires": []
+    },
+    {
+        "id": "467d9c20.43a164",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "topic": "",
+        "payload": "udap:rootservice",
+        "payloadType": "str",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": "",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "efd573c6.7f409"
+            ]
+        ]
+    },
+    {
+        "id": "efd573c6.7f409",
+        "type": "udap-discovery",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "broadcast": false,
+        "broadcastIP": "",
+        "x": 340,
+        "y": 140,
+        "wires": [
+            [
+                "867bdc60.2052f"
+            ]
+        ]
+    },
+    {
+        "id": "867bdc60.2052f",
+        "type": "subflow:d226aab4.b89a58",
+        "z": "a37ea1d7.c0456",
+        "name": "Device Description",
+        "env": [],
+        "x": 550,
+        "y": 140,
+        "wires": [
+            [
+                "4a9f62ba.276d9c"
+            ],
+            [
+                "c39e3d04.ba6"
+            ]
+        ]
+    },
+    {
+        "id": "86eae99a.212458",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 240,
+        "wires": []
+    },
+    {
+        "id": "26b4425b.36ccbe",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "1. Discovery",
+        "info": "",
+        "x": 330,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "430968d3.0136a8",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "2. Description",
+        "info": "",
+        "x": 790,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "45d24441.98e5bc",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "3. Pairing",
+        "info": "ShowKey will display your pairing key on the TV.\nSending hello with your pairing key will authorize your IP for control. This is requiered only once.",
+        "x": 320,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "57dfffab.38cf5",
+        "type": "udap-api",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "url": "",
+        "api": "command",
+        "action": "HandleKeyInput",
+        "x": 400,
+        "y": 380,
+        "wires": [
+            [
+                "7ec88ba1.2a4394"
+            ]
+        ]
+    },
+    {
+        "id": "a4743173.5b231",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Off",
+        "topic": "",
+        "payload": "1",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 380,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "7ec88ba1.2a4394",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 610,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "d4b8ed55.52055",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Play",
+        "topic": "",
+        "payload": "33",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 420,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "28bd02a.eba6dfe",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Pause",
+        "topic": "",
+        "payload": "34",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 460,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "3f2039ca.043cc6",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Stop",
+        "topic": "",
+        "payload": "35",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 500,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "823a497f.a14238",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Volume up",
+        "topic": "",
+        "payload": "24",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 540,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "39973109.e0a6ee",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Volume down",
+        "topic": "",
+        "payload": "25",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 170,
+        "y": 580,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "e3f896c.1719f68",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Mute",
+        "topic": "",
+        "payload": "26",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "2c45cc38.ae9934",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Home",
+        "topic": "",
+        "payload": "21",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 660,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "a6870613.c38ac8",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "OK",
+        "topic": "",
+        "payload": "20",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 700,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "d0dbb6fb.ed7748",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Up",
+        "topic": "",
+        "payload": "12",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 740,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "2a320ea.fcb30f2",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Down",
+        "topic": "",
+        "payload": "13",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "d49b520d.f2bef",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Left",
+        "topic": "",
+        "payload": "14",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 820,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "ae2e06f0.7e1068",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Right",
+        "topic": "",
+        "payload": "15",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 860,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "466e787a.6fb568",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "NetCast",
+        "topic": "",
+        "payload": "408",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 900,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "2efa2c55.74ba04",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "Back",
+        "topic": "",
+        "payload": "23",
+        "payloadType": "num",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 150,
+        "y": 940,
+        "wires": [
+            [
+                "57dfffab.38cf5"
+            ]
+        ]
+    },
+    {
+        "id": "95969458.a868e8",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "4. Send key-input",
+        "info": "",
+        "x": 180,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "dba389e7.e82e58",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 160,
+        "y": 240,
+        "wires": [
+            [
+                "e9fbc3a0.f2f64"
+            ]
+        ]
+    },
+    {
+        "id": "c39e3d04.ba6",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 790,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "a6c79ace.b4d9f8",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "GetAppList",
+        "info": "",
+        "x": 480,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "d6ff1287.a8d37",
+        "type": "inject",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "x": 470,
+        "y": 560,
+        "wires": [
+            [
+                "71b25c4a.109274"
+            ]
+        ]
+    },
+    {
+        "id": "71b25c4a.109274",
+        "type": "udap-api",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "url": "",
+        "api": "query",
+        "action": "AppList",
+        "x": 740,
+        "y": 560,
+        "wires": [
+            [
+                "4883ac12.aad104",
+                "108c06a2.6ce8c9"
+            ]
+        ]
+    },
+    {
+        "id": "c8c2b4a0.e3bba8",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1010,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "4883ac12.aad104",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.envelope.dataList[0].data{[name][0]:[auid][0]}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 640,
+        "wires": [
+            [
+                "c8c2b4a0.e3bba8"
+            ]
+        ]
+    },
+    {
+        "id": "f5ffbc0.0e9f748",
+        "type": "debug",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1010,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "108c06a2.6ce8c9",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload.envelope.dataList[0].data.{\"appname\":name[0],\"auid\": auid[0]}",
+                "tot": "jsonata"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 520,
+        "y": 680,
+        "wires": [
+            [
+                "4aa13ed.7d41cc",
+                "eee2f961.3230c8",
+                "d2d107a1.ab2a68",
+                "cecdcff2.597b2"
+            ]
+        ]
+    },
+    {
+        "id": "6e76879e.38d678",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "View and select Apps",
+        "info": "",
+        "x": 1040,
+        "y": 540,
+        "wires": []
+    },
+    {
+        "id": "4aa13ed.7d41cc",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "Netflix",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[3]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "AppExecute",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 680,
+        "wires": [
+            [
+                "f5ffbc0.0e9f748"
+            ]
+        ]
+    },
+    {
+        "id": "bbce5328.7f632",
+        "type": "udap-api",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "url": "",
+        "api": "command",
+        "action": "AppExecute",
+        "x": 1000,
+        "y": 700,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "eee2f961.3230c8",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "Amazon",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[4]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "AppExecute",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 720,
+        "wires": [
+            [
+                "f5ffbc0.0e9f748"
+            ]
+        ]
+    },
+    {
+        "id": "d2d107a1.ab2a68",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "YouTube",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[8]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "AppExecute",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 700,
+        "y": 760,
+        "wires": [
+            [
+                "f5ffbc0.0e9f748",
+                "bbce5328.7f632"
+            ]
+        ]
+    },
+    {
+        "id": "cecdcff2.597b2",
+        "type": "change",
+        "z": "a37ea1d7.c0456",
+        "name": "Plex",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "payload[32]",
+                "tot": "msg"
+            },
+            {
+                "t": "set",
+                "p": "action",
+                "pt": "msg",
+                "to": "AppExecute",
+                "tot": "str"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 710,
+        "y": 800,
+        "wires": [
+            [
+                "f5ffbc0.0e9f748"
+            ]
+        ]
+    },
+    {
+        "id": "bdfca707.a53488",
+        "type": "comment",
+        "z": "a37ea1d7.c0456",
+        "name": "Execute App",
+        "info": "",
+        "x": 1010,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "e9fbc3a0.f2f64",
+        "type": "udap-pairing",
+        "z": "a37ea1d7.c0456",
+        "name": "",
+        "url": "",
+        "api": "pairing",
+        "action": "hello",
+        "pairingKey": "",
+        "x": 330,
+        "y": 240,
+        "wires": [
+            [
+                "86eae99a.212458"
+            ]
+        ]
+    }
+]

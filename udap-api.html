@@ -1,0 +1,49 @@
+<script type="text/javascript">
+    RED.nodes.registerType('udap-api',{
+        category: 'udap',
+        color: '#a6bbcf',
+        defaults: {
+            name: {value:""},
+			url: {value:""},
+			api: {value:"command"},
+			action: {value:"HandleKeyInput"}
+        },
+        inputs:1,
+        outputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"udap-api";
+        }
+    });
+</script>
+
+<script type="text/html" data-template-name="udap-api">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="icon-tag"></i> DeviceIP:Port</label>
+        <input type="text" id="node-input-url" placeholder="192.168.178.xx:8080">
+    </div>
+    <div class="form-row">
+        <label for="node-input-api"><i class="icon-tag"></i> API</label>
+        <select type="text" id="node-input-api" >
+            <option value="command">command</option>
+            <option value="event">event</option>
+            <option value="query">query</option>
+        </select>
+    </div>
+    <div class="form-row">
+        <label for="node-input-action"><i class="icon-tag"></i> Action</label>
+        <select id="node-input-action" >
+            <option value="HandleKeyInput" selected>HandleKeyInput</option>
+            <option value="AppExecute">AppExecute</option>
+            <option value="AppList">AppList</option>
+        </select>
+    </div>
+</script>
+
+<script type="text/html" data-help-name="udap-api">
+    <p>A simple node that talks with UDAP/2.0 devices</p>
+</script>

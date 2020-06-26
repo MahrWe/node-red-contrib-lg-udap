@@ -1,0 +1,26 @@
+{
+  "name": "node-red-contrib-lg-udap",
+  "version": "0.0.1",
+  "description": "UDAP2.0 devices discovery",
+  "main": "udap.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "udap",
+    "lg",
+    "netcast"
+  ],
+  "dependencies": {
+    "node-ssdp": "^3.2.0"
+  },
+  "node-red" : {
+    "nodes": {
+      "udap": "udap.js",
+      "udap-pair": "udap-pairing.js",
+      "udap-api": "udap-api.js"
+    }
+  },
+  "author": "Matthias",
+  "license": "ISC"
+}
